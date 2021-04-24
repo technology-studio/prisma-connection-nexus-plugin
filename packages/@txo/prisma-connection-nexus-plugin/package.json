@@ -23,8 +23,8 @@
     "build:watch:lib": "yarn tsc --watch",
     "prepare": "yarn build"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
+    "nexus": "^1.0.0"
   }
 }
