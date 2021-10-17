@@ -25,6 +25,6 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "nexus": "^1.0.0"
+    "nexus": "^1.1.0"
   }
 }
