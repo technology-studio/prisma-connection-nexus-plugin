@@ -4,6 +4,6 @@
  * @Copyright: Technology Studio
 **/
 
-export const addOne = (a: number | undefined): number | undefined => {
-  return a && a + 1
+export const addOne = (a: number | undefined | null): number | undefined => {
+  return a != null ? a + 1 : undefined
 }
