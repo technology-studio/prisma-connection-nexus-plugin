@@ -5,4 +5,5 @@
 **/
 
 export * from './AddOne'
+export * from './ConnectionArgs'
 export * from './PrismaConectionPlugin'
