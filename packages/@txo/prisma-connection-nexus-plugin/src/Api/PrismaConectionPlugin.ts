@@ -7,6 +7,7 @@
 import type { GraphQLResolveInfo } from 'graphql'
 import { connectionPlugin, intArg } from 'nexus'
 import { NexusPlugin } from 'nexus/dist/plugin'
+import { ConnectionPluginConfig } from 'nexus/dist/plugins/connectionPlugin'
 
 const validationArgs = (
   // eslint-disable-next-line @typescript-eslint/default-param-last
@@ -27,7 +28,20 @@ const validationArgs = (
   }
 }
 
-export const prismaConnectionPlugin = (): NexusPlugin => connectionPlugin({
+type PaginationArgs = {
+  take: number,
+}
+
+const hasNextPage = (nodes: unknown[], args: PaginationArgs): boolean => {
+  return nodes.length > args.take
+}
+
+/** A sensible default for determining "previous page". */
+const hasPreviousPage = (nodes: unknown[], args: PaginationArgs): boolean => {
+  return false
+}
+
+export const prismaConnectionPlugin = (config?: ConnectionPluginConfig): NexusPlugin => connectionPlugin({
   disableForwardPagination: true,
   disableBackwardPagination: true,
   includeNodesField: true,
@@ -36,4 +50,12 @@ export const prismaConnectionPlugin = (): NexusPlugin => connectionPlugin({
     take: intArg(),
     skip: intArg(),
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pageInfoFromNodes: (nodes: unknown[], args: any) => {
+    return {
+      hasNextPage: hasNextPage(nodes, args),
+      hasPreviousPage: hasPreviousPage(nodes, args),
+    }
+  },
+  ...config,
 })
