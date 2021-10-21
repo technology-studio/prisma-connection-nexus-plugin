@@ -14,6 +14,7 @@ const validationArgs = (
   args: {
     skip?: number,
     take?: number,
+    first?: number,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     cursor?: Record<string, any>,
   } = {},
@@ -25,6 +26,9 @@ const validationArgs = (
   }
   if (args.skip && args.cursor) {
     throw new Error(`The ${info.parentType.name}.${info.fieldName} connection field requires a "skip" or "cursor" argument, not both`)
+  }
+  if (args.take) {
+    args.first = args.take
   }
 }
 

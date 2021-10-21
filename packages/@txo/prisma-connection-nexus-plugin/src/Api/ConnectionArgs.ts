@@ -6,7 +6,12 @@
 
 import { addOne } from './AddOne'
 
-export const connectionArgs = <ARGS extends { take?: number | null }>(args: ARGS): ARGS => ({
-  ...args,
-  take: addOne(args.take),
-})
+export const connectionArgs = <ARGS extends { take?: number | null }>(args: ARGS): ARGS => {
+  const { first, ...cleanedArgs }: {
+    first: number,
+  } = args as ARGS & { first: number }
+  return {
+    ...cleanedArgs as ARGS,
+    take: addOne(args.take),
+  }
+}
