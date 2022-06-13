@@ -20,12 +20,8 @@ const validationArgs = (
   } = {},
   info: GraphQLResolveInfo,
 ): void => {
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  if (!(args.skip || args.skip === 0) && !args.cursor) {
-    throw new Error(`The ${info.parentType.name}.${info.fieldName} connection field requires a "skip" or "cursor" argument`)
-  }
   if (args.skip && args.cursor) {
-    throw new Error(`The ${info.parentType.name}.${info.fieldName} connection field requires a "skip" or "cursor" argument, not both`)
+    throw new Error(`The ${info.parentType.name}.${info.fieldName} connection field should not contain both "skip" and "cursor" arguments`)
   }
   if (args.take) {
     args.first = args.take
